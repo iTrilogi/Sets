@@ -41,9 +41,9 @@ struct set_table *set_table_new(const size_t hashmap_size)
     }
     return table;
 }
-struct set_node *search_at_index(struct set_table *table, const char *key, const size_t key_len, size_t hashmap_size)
+struct set_node *search_at_index(struct set_table *table, const char *key, const size_t key_len)
 {
-    size_t index = djb33x_hash(key, key_len) % hashmap_size;
+    size_t index = djb33x_hash(key, key_len) % table->hashmap_size;
 
     struct set_node *current_node = table->nodes[index];
 
@@ -93,9 +93,9 @@ int *set_insert(struct set_table *table, const char *key, const size_t key_len)
     return 0;
 }
 
-int remove_at_index(struct set_table *table, const char *key, const size_t key_len, size_t hashmap_size)
+int remove_at_index(struct set_table *table, const char *key, const size_t key_len)
 {
-    size_t index = djb33x_hash(key, key_len) % hashmap_size;
+    size_t index = djb33x_hash(key, key_len) % table->hashmap_size;
 
     struct set_node *current_node = table->nodes[index];
     struct set_node *previous_node;
@@ -153,12 +153,12 @@ int main(int argc, char const *argv[])
     set_insert(table, "franco", 6);
     set_insert(table, "caldaia", 7);
 
-    search_at_index(table, "testa", 5, hashmap_size);
-    search_at_index(table, "gatto", 5, hashmap_size);
-    search_at_index(table, "franco", 6, hashmap_size);
-    search_at_index(table, "asdasd", 7, hashmap_size);
+    search_at_index(table, "testa", 5);
+    search_at_index(table, "gatto", 5);
+    search_at_index(table, "franco", 6);
+    search_at_index(table, "asdasd", 7);
 
-    // remove_at_index(table, "gatto", 5, hashmap_size);
+    // remove_at_index(table, "gatto", 5);
 
     print(table);
 
